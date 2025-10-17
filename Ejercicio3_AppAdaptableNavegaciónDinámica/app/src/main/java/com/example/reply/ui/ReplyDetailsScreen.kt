@@ -21,21 +21,19 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -48,7 +46,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import com.example.reply.R
@@ -60,43 +57,34 @@ fun ReplyDetailsScreen(
     replyUiState: ReplyUiState,
     onBackPressed: () -> Unit,
     modifier: Modifier = Modifier,
-    isFullScreen: Boolean = false
 ) {
     BackHandler {
         onBackPressed()
     }
     Box(modifier = modifier) {
         LazyColumn(
-            contentPadding = PaddingValues(
-                top = WindowInsets.safeDrawing.asPaddingValues().calculateTopPadding(),
-            ),
+            contentPadding = WindowInsets.safeDrawing.asPaddingValues(),
             modifier = Modifier
-                .testTag(stringResource(R.string.details_screen))
                 .fillMaxSize()
                 .background(color = MaterialTheme.colorScheme.inverseOnSurface)
         ) {
             item {
-                if (isFullScreen) {
-                    ReplyDetailsScreenTopBar(
-                        onBackPressed,
-                        replyUiState,
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                bottom = dimensionResource(R.dimen.detail_topbar_padding_bottom),
-                                top = dimensionResource(R.dimen.topbar_padding_vertical)
-                            )
-                    )
-                }
+                ReplyDetailsScreenTopBar(
+                    onBackPressed,
+                    replyUiState,
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            bottom = dimensionResource(R.dimen.detail_topbar_padding_bottom),
+                            top = dimensionResource(R.dimen.topbar_padding_vertical)
+                        )
+                )
                 ReplyEmailDetailsCard(
                     email = replyUiState.currentSelectedEmail,
                     mailboxType = replyUiState.currentMailbox,
-                    isFullScreen = isFullScreen,
-                    modifier = if (isFullScreen) {
-                        Modifier.padding(horizontal = dimensionResource(R.dimen.detail_card_outer_padding_horizontal))
-                    } else {
-                        Modifier
-                    }
+                    modifier = Modifier
+                        .navigationBarsPadding()
+                        .padding(horizontal = dimensionResource(R.dimen.detail_card_outer_padding_horizontal))
                 )
             }
         }
@@ -120,7 +108,7 @@ private fun ReplyDetailsScreenTopBar(
                 .background(MaterialTheme.colorScheme.surface, shape = CircleShape),
         ) {
             Icon(
-                imageVector = Icons.Default.ArrowBack,
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = stringResource(id = R.string.navigation_back)
             )
         }
@@ -144,7 +132,6 @@ private fun ReplyEmailDetailsCard(
     email: Email,
     mailboxType: MailboxType,
     modifier: Modifier = Modifier,
-    isFullScreen: Boolean = false
 ) {
     val context = LocalContext.current
     val displayToast = { text: String ->
@@ -163,19 +150,15 @@ private fun ReplyEmailDetailsCard(
                 email,
                 Modifier.fillMaxWidth()
             )
-            if (isFullScreen) {
-                Spacer(modifier = Modifier.height(dimensionResource(R.dimen.detail_content_padding_top)))
-            } else {
-                Text(
-                    text = stringResource(email.subject),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.outline,
-                    modifier = Modifier.padding(
-                        top = dimensionResource(R.dimen.detail_content_padding_top),
-                        bottom = dimensionResource(R.dimen.detail_expanded_subject_body_spacing)
-                    ),
-                )
-            }
+            Text(
+                text = stringResource(email.subject),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.outline,
+                modifier = Modifier.padding(
+                    top = dimensionResource(R.dimen.detail_content_padding_top),
+                    bottom = dimensionResource(R.dimen.detail_expanded_subject_body_spacing)
+                ),
+            )
             Text(
                 text = stringResource(email.body),
                 style = MaterialTheme.typography.bodyLarge,
@@ -307,7 +290,8 @@ private fun ActionButton(
         ) {
             Text(
                 text = text,
-                color = if (containIrreversibleAction) {
+                color =
+                if (containIrreversibleAction) {
                     MaterialTheme.colorScheme.onError
                 } else {
                     MaterialTheme.colorScheme.onSurfaceVariant
