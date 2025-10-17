@@ -1,0 +1,94 @@
+
+# Built application files
+*.apk
+*.ap_
+*.aab
+
+# Mac files
+.DS_Store
+
+# Files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# Generated files
+bin/
+gen/
+out/
+build/
+
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+
+# Local configuration file (SDK path, signing keys, etc.)
+local.properties
+
+# Log files
+*.log
+
+# Android Studio
+.idea/
+*.iml
+*.ipr
+*.iws
+.idea/caches/
+.idea/libraries/
+.idea/modules.xml
+.idea/workspace.xml
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml
+
+# IntelliJ
+*.iml
+*.iws
+*.ipr
+out/
+
+# Keystore files (if any, avoid pushing signing keys)
+*.jks
+*.keystore
+
+# Proguard
+proguard/
+proguard-project.txt
+
+# NDK
+obj/
+
+# Captures (from Android Studio screenshots)
+captures/
+
+# Google Services (you should not upload API keys)
+google-services.json
+app/google-services.json
+
+# Firebase Crashlytics
+crashlytics-build.properties
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+fastlane/readme.md
+
+# Temporary files
+*.tmp
+*.temp
+
+# OS files
+Thumbs.db
+
+# Kotlin build cache
+.kotlinc/
+
+# Jetpack Compose previews cache
+compose-cache/
+
+# Android Profiling
+*.hprof
