@@ -1,0 +1,36 @@
+
+
+# Archivos y carpetas del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de Gradle
+.gradle/
+build/
+local.properties
+
+# Archivos de Android Studio / IntelliJ IDEA
+.idea/
+*.iml
+
+# Archivos generados
+captures/
+outputs/
+*.apk
+*.ap_
+*.dex
+*.class
+
+# Archivos temporales
+*.log
+*.tmp
+
+# Archivos de configuración del entorno
+.env
+.vscode/
+*.swp
+*.swo
+
+# Archivos de cache
+.cxx/
+.cache/
